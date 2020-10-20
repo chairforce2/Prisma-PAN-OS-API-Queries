@@ -1,0 +1,8 @@
+curl -k --location --request POST 'https://api.gpcloudservice.com/getPrismaAccessIP/v2' \
+--header 'header-api-key: _insert_your_api_key_here' \
+--header 'Content-Type: text/plain' \
+--data-raw '{
+"serviceType": "gp_gateway",
+"addrType": "all",
+"location": "all"
+   }'

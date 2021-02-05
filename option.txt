@@ -1,1 +1,1 @@
-{ "serviceType": "gp_portal", "addrType": "active", "location": "deployed" }
+{ "serviceType": "gp_gateway", "addrType": "all", "location": "all" }

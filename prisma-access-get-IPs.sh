@@ -9,40 +9,40 @@ read -p "Enter desired IPs (gp_gateway / gp_portal / all): " NodeType
 read -p "addrType (all / active / reserved): " addressType
 read -p "location (all / deployed): " loc 
 
+else
+
+echo "what is your Use case?"
+echo "(1) Get current active IPs to whitelist for Prisma Access users to internet apps"
+echo "(2) Get current active, passive, and reserved IPs to whitelist for Primsa Access users to internet apps"
+echo "(3) Get every possible Primsa Access egress IP. Check the API docs here to figure it out: https://docs.paloaltonetworks.com/prisma/prisma-access/prisma-access-panorama-admin/prisma-access-overview/retrieve-ip-addresses-for-prisma-access "
+
+read -p "Enter the number of your use case: " UseCaseNumber
+
+case $UseCaseNumber in 
+    1)
+        NodeType=gp_gateway
+        addressType=active
+        loc=deployed
+        ;;
+    2)
+        NodeType=gp_gateway
+        addressType=all
+        loc=all
+        ;;
+    3)
+        NodeType=all
+        addressType=all
+        loc=all
+        ;;
+
+    *)
+        echo "invalid entry"
+        ;;
+esac
+
+
+fi
 touch ./option.txt
 echo { '"serviceType"': '"'$NodeType'"', '"addrType"': '"'$addressType'"', '"location"': '"'$loc'"' } > option.txt
 curl -X POST -d @option.txt -k -H "header-api-key:$key" "https://api.lab.gpcloudservice.com/getPrismaAccessIP/v2"
-
-else
-
-echo "Do you just want to know the IPs you need to whitelist right now for your Prisma Access users to access internet apps?"
-read -p "[y/n]" answer
-
-if [[ $answer = y ]] ; then
-NodeType=gp_gateway
-addressType=active
-loc=deployed
-touch ./option.txt
-echo { '"serviceType"': '"'$NodeType'"', '"addrType"': '"'$addressType'"', '"location"': '"'$loc'"' } > option.txt
-curl -X POST -d @option.txt -k -H "header-api-key:$key" "https://api.lab.gpcloudservice.com/getPrismaAccessIP/v2"
-
-else
-
-echo "Do you just want to know every IPs you may ever need to whitelist if you expand you Prisma Access user deployment globally?"
-read -p "[y/n]" answer
-if [[ $answer = y ]] ; then
-NodeType=gp_gateway
-addressType=all
-loc=all
-touch ./option.txt
-echo { '"serviceType"': '"'$NodeType'"', '"addrType"': '"'$addressType'"', '"location"': '"'$loc'"' } > option.txt
-curl -X POST -d @option.txt -k -H "header-api-key:$key" "https://api.lab.gpcloudservice.com/getPrismaAccessIP/v2"
-
-else
-echo "ok, well i'm just going to give you every possible egress IP since you aren't sure what you want.... check the API docs here to figure it out: https://docs.paloaltonetworks.com/prisma/prisma-access/prisma-access-panorama-admin/prisma-access-overview/retrieve-ip-addresses-for-prisma-access"
-curl -k -H "header-api-key:$key" "https://api.lab.gpcloudservice.com/getAddrList/latest?get_egress_ip_all=yes"
-fi
-fi
-fi
-
 

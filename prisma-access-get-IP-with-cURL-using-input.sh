@@ -11,7 +11,7 @@ read -p "location (all / deployed): " loc
 
 touch ./option.txt
 echo { '"serviceType"': '"'$NodeType'"', '"addrType"': '"'$addressType'"', '"location"': '"'$loc'"' } > option.txt
-curl -X POST -d @option.txt -k -H "header-api-key:$key" "https://api.lab.gpcloudservice.com/getPrismaAccessIP/v2"
+
 
 else
 
@@ -24,7 +24,7 @@ addressType=active
 loc=deployed
 touch ./option.txt
 echo { '"serviceType"': '"'$NodeType'"', '"addrType"': '"'$addressType'"', '"location"': '"'$loc'"' } > option.txt
-curl -X POST -d @option.txt -k -H "header-api-key:$key" "https://api.lab.gpcloudservice.com/getPrismaAccessIP/v2"
+
 
 else
 
@@ -36,13 +36,14 @@ addressType=all
 loc=all
 touch ./option.txt
 echo { '"serviceType"': '"'$NodeType'"', '"addrType"': '"'$addressType'"', '"location"': '"'$loc'"' } > option.txt
-curl -X POST -d @option.txt -k -H "header-api-key:$key" "https://api.lab.gpcloudservice.com/getPrismaAccessIP/v2"
+
 
 else
 echo "ok, well i'm just going to give you every possible egress IP since you aren't sure what you want.... check the API docs here to figure it out: https://docs.paloaltonetworks.com/prisma/prisma-access/prisma-access-panorama-admin/prisma-access-overview/retrieve-ip-addresses-for-prisma-access"
-curl -k -H "header-api-key:$key" "https://api.lab.gpcloudservice.com/getAddrList/latest?get_egress_ip_all=yes"
+
 fi
 fi
 fi
 
+curl -X POST -d @option.txt -k -H "header-api-key:$key" "https://api.lab.gpcloudservice.com/getPrismaAccessIP/v2"
 

@@ -4,6 +4,16 @@ read -p "Enter API key: " key
 
 echo "Do you know the Prisma Access API well enough to specify serviceType, addrType, location, etc?"
 read -p "[y/n]" answer
+
+echo "Are you querying a lab tenant?"
+read -p "[y/n]" IsLab
+
+if [[ $IsLab = y ]] ; then
+ApiUrl="https://api.lab.gpcloudservice.com/getPrismaAccessIP/v2"
+else
+ApiUrl="https://api.gpcloudservice.com/getPrismaAccessIP/v2"
+fi
+
 if [[ $answer = y ]] ; then
 read -p "Enter desired IPs (gp_gateway / gp_portal / all): " NodeType
 read -p "addrType (all / active / reserved): " addressType
@@ -44,5 +54,5 @@ esac
 fi
 touch ./option.txt
 echo { '"serviceType"': '"'$NodeType'"', '"addrType"': '"'$addressType'"', '"location"': '"'$loc'"' } > option.txt
-curl -X POST -d @option.txt -k -H "header-api-key:$key" "https://api.lab.gpcloudservice.com/getPrismaAccessIP/v2"
+curl -X POST -d @option.txt -k -H "header-api-key:$key" "$ApiUrl"
 

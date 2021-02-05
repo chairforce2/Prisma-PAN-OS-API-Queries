@@ -47,6 +47,7 @@ case $UseCaseNumber in
 
     *)
         echo "invalid entry"
+        exit
         ;;
 esac
 

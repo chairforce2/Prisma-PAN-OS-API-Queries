@@ -1,1 +1,0 @@
-{ "serviceType": "gp_gateway", "addrType": "all", "location": "all" }

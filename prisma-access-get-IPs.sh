@@ -37,7 +37,7 @@ case $UseCaseNumber in
     2)
         NodeType=gp_gateway
         addressType=all
-        loc=all
+        loc=deployed
         ;;
     3)
         NodeType=all

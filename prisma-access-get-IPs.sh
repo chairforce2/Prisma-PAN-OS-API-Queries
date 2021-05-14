@@ -55,5 +55,8 @@ esac
 fi
 touch ./option.txt
 echo { '"serviceType"': '"'$NodeType'"', '"addrType"': '"'$addressType'"', '"location"': '"'$loc'"' } > option.txt
-curl -X POST -d @option.txt -k -H "header-api-key:$key" "$ApiUrl"
+curl -X POST -d @option.txt -k -H "header-api-key:$key" "$ApiUrl" > ./Prisma-IPs.txt
+
+grep -o -E "\"addressType\": \"[a-z]+" ./prisma-IPs.txt
+grep -o -E "\"address\": \"\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" ./prisma-IPs.txt
 

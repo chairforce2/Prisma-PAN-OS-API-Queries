@@ -56,10 +56,11 @@ fi
 touch ./option.txt
 echo { '"serviceType"': '"'$NodeType'"', '"addrType"': '"'$addressType'"', '"location"': '"'$loc'"' } > option.txt
 curl -X POST -d @option.txt -k -H "header-api-key:$key" "$ApiUrl" > ./Prisma-IPs.txt
-
+echo "   "
+echo "    "
 echo "Below is a list of zones and addresses based on your use case. If you have multiple zones, then the zones and addresses should be in the same order."
 echo "   "
 echo "The first 'addresses' line will correspond to the first zone, the second 'addresses' line to the second zone listed, etc"
-
+echo "   "
 grep -o -E "\"zone\": \"(.*?)\"" ./prisma-IPs.txt
 grep -o -E "\"addresses\": \[(.*?)\]" ./prisma-IPs.txt
